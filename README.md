@@ -47,11 +47,25 @@ On our main module (`AppModule`), we set the property `boostrap`, to the name of
 })
 export class AppModule { }
 ```
-On every component we define their optios with an object like this one, the `selector` is the name that is going to be used to add the component in a template, like an html tag (`<app-post-create></app-post-create>`)
+## Component options
+On every component we define their options with an object like this one, the `selector` is the name that is going to be used to add the component in a template, like an html tag (`<app-post-create></app-post-create>`)
 ```ts
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
   styleUrls: ['./post-create.component.css']
 })
+```
+## Property binding
+By adding the `[]` to and HTML element attribute, the value of tha attibute gets binded to the value of the returning function or variable. Here the `value` and `placeholder` attibutes are binded to the component
+```html
+<textarea rows="6" [value]="newPost" [placeholder]="fillText"></textarea>
+```
+```ts
+export class PostCreateComponent implements OnInit {
+  newPost ='NO CONTENT';
+  fillText(){
+    return 'Please write here'
+  }
+}
 ```
