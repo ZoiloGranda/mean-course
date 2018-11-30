@@ -57,7 +57,7 @@ On every component we define their options with an object like this one, the `se
 })
 ```
 ## Property binding
-By adding the `[]` to and HTML element attribute, the value of tha attibute gets binded to the value of the returning function or variable. Here the `value` and `placeholder` attibutes are binded to the component
+By adding the `[]` to a HTML element attribute, the value of that attibute gets binded to the value of the selected function or variable. Here the `value` and `placeholder` attibutes are binded to the component
 ```html
 <textarea rows="6" [value]="newPost" [placeholder]="fillText"></textarea>
 ```
@@ -67,5 +67,34 @@ export class PostCreateComponent implements OnInit {
   fillText(){
     return 'Please write here'
   }
+}
+```
+## Local reference / Reference variables
+A Local reference is a reference to an HTML element in the template, and we pass it to a function on the component. In here, the Local reference is set to `#postInput`, which selects the `<textarea>` element and then passed to the click event `onAddPost(postInput)`, so that the component receives the HTML element.
+
+```html
+<!--Template-->
+<textarea rows="6" [value]="newPost" #postInput></textarea>
+<hr>
+<button (click)="onAddPost(postInput)">Save Post</button>
+<p>{{newPost }}</p>
+```
+```ts
+//Controller
+onAddPost(postInput:HTMLTextAreaElement){
+  this.newPost = postInput.value;
+}
+```
+
+## Two way data binding
+We can bind a value between the template and the controller using two data binding, by defining the `[(ngModel)]` directive on the template, and initializing the variable on the controller.
+```html
+<!--Template-->
+<textarea rows="6" [(ngModel)]="enteredValue"></textarea>
+```
+```ts
+//Controller
+export class PostCreateComponent implements OnInit {
+  enteredValue =''; 
 }
 ```
