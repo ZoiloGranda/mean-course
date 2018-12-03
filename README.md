@@ -98,3 +98,6 @@ export class PostCreateComponent implements OnInit {
   enteredValue =''; 
 }
 ```
+
+## ng add [package]
+Adds the npm package for a published library to the project, and configures your default app project to use that library, eg : `ng add @angular/material`.
