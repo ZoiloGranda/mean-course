@@ -101,3 +101,12 @@ export class PostCreateComponent implements OnInit {
 
 ## ng add [package]
 Adds the npm package for a published library to the project, and configures your default app project to use that library, eg : `ng add @angular/material`.
+
+## Angular css selector :host
+The :host pseudo-class selector, targets styles in the element that hosts the component, (the parent) as opposed to targeting elements inside the component's template.
+```css
+:host{ //host targets the parent component
+  display: block;
+  margin-top: 1rem;
+}
+```
