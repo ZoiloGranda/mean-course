@@ -112,6 +112,7 @@ The :host pseudo-class selector, targets styles in the element that hosts the co
 ```
 
 ## Event emitter
+This is the flow to emit an Event, listen to it, and bind a variable value from the parent component to the children.
 ```ts
 //On post-create.component.ts
 //Importing the EventEmitter and the Output
