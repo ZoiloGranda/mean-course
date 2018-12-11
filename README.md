@@ -110,3 +110,41 @@ The :host pseudo-class selector, targets styles in the element that hosts the co
   margin-top: 1rem;
 }
 ```
+
+## Event emitter
+```ts
+//On post-create.component.ts
+//Importing the EventEmitter and the Output
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+// Defining the event name
+  @Output() postCreated = new EventEmitter();
+//This function when clicked, will call the postCreated event and emit it with the new post data
+  onAddPost(){
+    const post = {
+      title:this.enteredTitle,
+      content:this.enteredContent
+    }
+    this.postCreated.emit(post)
+  }
+```
+```html
+<!--On the parent component app.component.html 
+we listen to the (postCreated) event, and when we receive the event, the function onPostAdded($event), is called
+which adds the new post to the existing array of posts.
+Then we bind the posts variable of app-post-list to the same value of storedPosts from app-post-create
+-->
+<main>
+  <app-post-create (postCreated)="onPostAdded($event)"></app-post-create>
+  <app-post-list [posts]="storedPosts"></app-post-list>
+</main>
+```
+```ts
+//On post-list.component.ts we import the Input dependency, and we bind the posts variable to the receiving value
+//from the parent component
+import { Component, OnInit, Input } from '@angular/core';
+
+export class PostListComponent implements OnInit {
+  @Input() posts =[];
+}
+```
+
