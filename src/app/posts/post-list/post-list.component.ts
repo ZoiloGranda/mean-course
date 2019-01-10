@@ -20,7 +20,7 @@ export class PostListComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    this.posts = this.postsService.getPosts()
+    this.postsService.getPosts()
     //the first parameter that subscribe receives, is the the callback function when a new
     // event is emited
     this.postsSub = this.postsService.getPostsUpdateListener().subscribe((posts:Post[])=>{
