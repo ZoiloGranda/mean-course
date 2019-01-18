@@ -13,7 +13,7 @@ app.use((req,res,next)=>{
 next()  
 })
 
-app.post('api/posts',(req, res, next)=>{
+app.post('/api/posts',(req, res, next)=>{
     const post = req.body;
     console.log(post);
     res.status(201).json({
@@ -21,7 +21,7 @@ app.post('api/posts',(req, res, next)=>{
     })
 })
 
-app.use('/api/posts',(req, res, next)=>{
+app.get('/api/posts',(req, res, next)=>{
   const posts =[
     {id: 'asdad132', title:'first post', content:'post content'},
     {id: 'fk28ehsd', title:'second post', content:'post content 2'}

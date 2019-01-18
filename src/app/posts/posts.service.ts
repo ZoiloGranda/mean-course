@@ -25,10 +25,12 @@ export class PostsService {
   
   addPost(title:string, content:string){
     const post:Post={id:null, title:title,content:content};
-    this.posts.push(post);
-    //after the new post is pushed to the array of post, we emit next() which sends a message to 
-    // all the subscribers (observers), and send all the posts
-    this.postsUpdated.next([...this.posts])
+    this.http.post<{message:string}>('http://localhost:3000/api/posts', post).subscribe((responseData)=>{
+      console.log(responseData.message)
+      this.posts.push(post);
+      //after the new post is pushed to the array of post, we emit next() which sends a message to 
+      // all the subscribers (observers), and send all the posts
+      this.postsUpdated.next([...this.posts])
+    })
   }
-  
 }
