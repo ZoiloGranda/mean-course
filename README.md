@@ -150,7 +150,7 @@ export class PostListComponent implements OnInit {
 ```
 # Mongo / Mongoose notes
 ## Connection 
-The node-angular part is the database name, is created automatically the first time we add data.The Collection is also created automatically using the model name in plural.
+The `node-angular` part is the database name, is created automatically the first time we add data.The Collection is also created automatically using the model name in plural.
 ```
 mongoose.connect('mongodb+srv://User:Password@cluster0-pfpox.mongodb.net/node-angular?retryWrites=true')
 ```
