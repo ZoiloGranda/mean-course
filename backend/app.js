@@ -37,13 +37,15 @@ app.post('/api/posts',(req, res, next)=>{
 })
 
 app.get('/api/posts',(req, res, next)=>{
-  const posts =[
-    {id: 'asdad132', title:'first post', content:'post content'},
-    {id: 'fk28ehsd', title:'second post', content:'post content 2'}
-  ]
-  res.status(200).json({
-    message:'Posts fetched correctly',
-    posts:posts
+  Post.find().then(documents =>{
+    console.log(documents);
+    res.status(200).json({
+      message:'Posts fetched correctly',
+      posts:documents
+    })
+  })
+  .catch(err=>{
+    console.log(err);
   })
 })
 
