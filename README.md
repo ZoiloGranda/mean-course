@@ -148,6 +148,28 @@ export class PostListComponent implements OnInit {
   @Input() posts =[];
 }
 ```
+## Observables and RxJS
+First we make a get request, we specify the type of data we will receive `message:string, posts:any`. Then we call the `pipe` method to transform the stream of received data. The first `map` method is not the javascript method, is a method from the RxJS library. Then we call the native `map` method from javascript to modify the received data, in an `Object` that fits the `Post` model from the front end. Last the `subscribe` and `next` methods sends the `posts` data throught the Observable.
+```ts
+getPosts(){
+  this.http.get<{message:string, posts:any}>('http://localhost:3000/api/posts')
+  .pipe(map((postData)=>{
+    return postData.posts.map(post=>{
+      return {
+        title: post.title,
+        content: post.content,
+        id: post._id
+      }
+    })
+  }))
+  .subscribe((transformedPosts)=>{
+    this.posts = transformedPosts;
+    //using spread operator and array[] to return a the posts as a new array instead of a reference to this.posts
+    this.postsUpdated.next([...this.posts])
+  });
+}
+```
+
 # Mongo / Mongoose notes
 ## Connection 
 The `node-angular` part is the database name, is created automatically the first time we add data.The Collection is also created automatically using the model name in plural.
