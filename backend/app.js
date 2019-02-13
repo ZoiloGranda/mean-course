@@ -8,7 +8,7 @@ const app = express();
 
 mongoose.connect('mongodb+srv://Zoilo:8EbEIeZlHRy4eWC7@cluster0-pfpox.mongodb.net/node-angular?retryWrites=true')
 .then(()=>{
-  console.log('conneced to DB');
+  console.log('connected to DB');
 }).catch((err)=>{
   console.log('connection to DB failed');
   console.log(err);
@@ -21,19 +21,21 @@ app.use((req,res,next)=>{
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Access-Control-Allow-Headers','Origin ,X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Methods','GET, POST, PATCH, DELETE, OPTIONS');
-next()  
+  next()  
 })
 
 app.post('/api/posts',(req, res, next)=>{
-    const post = new Post({
-      title:req.body.title,
-      content:req.body.content
-    });
-    console.log(post);
-    post.save()
+  const post = new Post({
+    title:req.body.title,
+    content:req.body.content
+  });
+  console.log(post);
+  post.save().then(createdPost => {
     res.status(201).json({
-      message: 'Post added successfully'
+      message: 'Post added successfully',
+      postId: createdPost._id
     })
+  })
 })
 
 app.get('/api/posts',(req, res, next)=>{
