@@ -170,6 +170,19 @@ getPosts(){
 }
 ```
 
+## routerLink
+This directive lets you link to specific routes in your app, that were defined in you app router module and load the corresponding component.
+```html
+<mat-toolbar color="primary">
+  <span><a routerLink="/">MyMessages</a></span>
+  <ul>
+    <li>
+      <a routerLink="/create">New Post</a>
+    </li>
+  </ul>
+</mat-toolbar>
+```
+
 # Mongo / Mongoose notes
 ## Connection 
 The `node-angular` part is the database name, is created automatically the first time we add data.The Collection is also created automatically using the model name in plural.
