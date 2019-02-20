@@ -171,13 +171,13 @@ getPosts(){
 ```
 
 ## routerLink
-This directive lets you link to specific routes in your app, that were defined in you app router module and load the corresponding component.
+This directive lets you link to specific routes in your app, that were defined in you app router module and load the corresponding component. The `routerLinkActive`, add the css class `"mat-accent"`, when the element is active
 ```html
 <mat-toolbar color="primary">
   <span><a routerLink="/">MyMessages</a></span>
   <ul>
     <li>
-      <a routerLink="/create">New Post</a>
+      <a routerLink="/create" routerLinkActive="mat-accent">New Post</a>
     </li>
   </ul>
 </mat-toolbar>
