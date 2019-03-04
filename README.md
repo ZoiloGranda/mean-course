@@ -31,7 +31,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 On `main.ts`, this is the line of code that starts the Angular app. First it creates a platform, and boostraps the main module (`AppModule`) of your app.
 ```typescript
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+.catch(err => console.log(err));
 ```
 On our main module (`AppModule`), we set the property `boostrap`, to the name of our main component (`AppComponent`)
 ```ts
@@ -82,7 +82,7 @@ A Local reference is a reference to an HTML element in the template, and we pass
 ```ts
 //Controller
 onAddPost(postInput:HTMLTextAreaElement){
-  this.newPost = postInput.value;
+this.newPost = postInput.value;
 }
 ```
 
@@ -95,7 +95,7 @@ We can bind a value between the template and the controller using two data bindi
 ```ts
 //Controller
 export class PostCreateComponent implements OnInit {
-  enteredValue =''; 
+enteredValue =''; 
 }
 ```
 
@@ -118,15 +118,15 @@ This is the flow to emit an Event, listen to it, and bind a variable value from 
 //Importing the EventEmitter and the Output
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 // Defining the event name
-  @Output() postCreated = new EventEmitter();
+@Output() postCreated = new EventEmitter();
 //This function when clicked, will call the postCreated event and emit it with the new post data
-  onAddPost(){
-    const post = {
-      title:this.enteredTitle,
-      content:this.enteredContent
-    }
-    this.postCreated.emit(post)
-  }
+onAddPost(){
+const post = {
+  title:this.enteredTitle,
+  content:this.enteredContent
+}
+this.postCreated.emit(post)
+}
 ```
 ```html
 <!--On the parent component app.component.html 
@@ -183,6 +183,35 @@ This directive lets you link to specific routes in your app, that were defined i
 </mat-toolbar>
 ```
 
+When the routerLink needs to create a dynamic url, it must be implemented like this `[routerLink]="['/edit',post.id]`. Each comma separated string is a segment of the url. In this case it will create a route to `/edit/post.id` (`post.id` is a current value on the html)
+
+```html
+<a mat-button color="primary" [routerLink]="['/edit',post.id]">EDIT</a>
+```
+## ActivatedRoute
+Contains the information about a route associated with a component loaded in an outlet
+
+```js
+//we import the module
+import { ActivatedRoute } from "@angular/router"
+
+//on the constructor we define our route public variable, which is of type ActivatedRoute
+constructor(public postsService: PostsService, public route: ActivatedRoute) {
+}
+
+ngOnInit() {
+  //then we use it. The ActivatedRoute is an Observable, so we can susbcribe to it
+  //paramMap contains the parameters of the route, in here we search for the postId param on the url
+  this.route.paramMap.subscribe((paramMap: ParaMap)=>{
+    if (paramMap.has('postId')){
+      // ... code
+    } else{
+      // more code
+    }
+  })
+}
+
+```
 # Mongo / Mongoose notes
 ## Connection 
 The `node-angular` part is the database name, is created automatically the first time we add data.The Collection is also created automatically using the model name in plural.
