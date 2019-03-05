@@ -193,7 +193,7 @@ Contains the information about a route associated with a component loaded in an 
 
 ```js
 //we import the module
-import { ActivatedRoute } from "@angular/router"
+import { ActivatedRoute, ParamMap } from "@angular/router"
 
 //on the constructor we define our route public variable, which is of type ActivatedRoute
 constructor(public postsService: PostsService, public route: ActivatedRoute) {
@@ -202,7 +202,7 @@ constructor(public postsService: PostsService, public route: ActivatedRoute) {
 ngOnInit() {
   //then we use it. The ActivatedRoute is an Observable, so we can susbcribe to it
   //paramMap contains the parameters of the route, in here we search for the postId param on the url
-  this.route.paramMap.subscribe((paramMap: ParaMap)=>{
+  this.route.paramMap.subscribe((paramMap: ParamMap)=>{
     if (paramMap.has('postId')){
       // ... code
     } else{
@@ -217,4 +217,23 @@ ngOnInit() {
 The `node-angular` part is the database name, is created automatically the first time we add data.The Collection is also created automatically using the model name in plural.
 ```
 mongoose.connect('mongodb+srv://User:Password@cluster0-pfpox.mongodb.net/node-angular?retryWrites=true')
+```
+
+## updateOne
+
+```js
+app.put('/api/posts/:id', (req, res, next)=>{
+  const post = new Post({
+    _id:req.body.id,
+    title: req.body.title,
+    content: req.body.content
+  })
+  Post.updateOne({_id:req.params.id}, post).then(result=>{
+    console.log(result);
+    res.status(200).json({message:'updated successfully'})
+  }).catch(error=>{
+    console.log('error updating the post');
+    console.log(error);
+  })
+})
 ```
