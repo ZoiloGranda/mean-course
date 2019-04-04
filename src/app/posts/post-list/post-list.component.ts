@@ -15,15 +15,18 @@ export class PostListComponent implements OnInit, OnDestroy {
   //   {title:'Third Post', content:'This is the third post content'},
   // ]
   posts:Post[] =[];
+  isLoading = false;
   private postsSub : Subscription;
   constructor(public postsService:PostsService) {
    }
 
   ngOnInit() {
-    this.postsService.getPosts()
+    this.isLoading = true;
+    this.postsService.getPosts();
     //the first parameter that subscribe receives, is the the callback function when a new
     // event is emited
     this.postsSub = this.postsService.getPostsUpdateListener().subscribe((posts:Post[])=>{
+      this.isLoading = false;
       this.posts = posts;
     })
   }

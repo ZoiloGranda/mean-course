@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { Post } from './post.model';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+import { Post } from './post.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
   private posts: Post[]=[];
   private postsUpdated = new Subject<Post[]>()
-  constructor(private http: HttpClient) { }
+  
+  constructor(private http: HttpClient, private router: Router) { }
   
   getPosts(){
     //https://github.com/ZoiloGranda/mean-course#observables-and-rxjs
@@ -47,7 +51,8 @@ export class PostsService {
       this.posts.push(post);
       //after the new post is pushed to the array of post, we emit next() which sends a message to 
       // all the subscribers (observers), and send all the posts
-      this.postsUpdated.next([...this.posts])
+      this.postsUpdated.next([...this.posts]);
+      this.router.navigate(["/"]);
     })
   }
   
@@ -60,7 +65,8 @@ export class PostsService {
       const oldPostIndex = updatedPosts.findIndex(p => p.id=== post.id);
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
-      this.postsUpdated.next([...this.posts])
+      this.postsUpdated.next([...this.posts]);
+      this.router.navigate(["/"]);
     })
   }
   
