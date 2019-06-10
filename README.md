@@ -7,7 +7,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 1. `npm install`
 2. `ng serve` on one console to run the front end
 3. `npm run start:server` on another console to run the backend
-4. The DB is on MongoDB Atlas, you will probably need to go there, Login->Security->IP Whitelist->Edit-> Add current IP Address.
+4. The DB is on MongoDB Atlas, you will probably need to go there, **Login->Security->IP Whitelist->Edit->Add current IP Address**.
 5. On the browser go to http://localhost:4200
 
 ## Development server
