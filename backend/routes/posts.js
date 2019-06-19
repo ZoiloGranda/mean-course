@@ -83,7 +83,6 @@ router.get('',(req, res, next)=>{
     return Post.count()
   })
   .then(count =>{
-    console.log(documents);
     res.status(200).json({
       message: 'Posts fetched correctly',
       posts: fetchedPosts,

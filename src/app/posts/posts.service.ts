@@ -19,18 +19,20 @@ export class PostsService {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`
     //https://github.com/ZoiloGranda/mean-course#observables-and-rxjs
     this.http.get<{message:string, posts:any, maxPosts: number}>('http://localhost:3000/api/posts'+queryParams)
-    .pipe(map((postData)=>{
-      return {
-        postData.posts.map(post=>{
-          return {
-            title: post.title,
-            content: post.content,
-            id: post._id,
-            imagePath: post.imagePath
-          }
-        }), maxPosts: postData.maxPosts
-      }
-    }))
+    .pipe(
+      map(postData => {
+        return {
+          posts: postData.posts.map(post=>{
+            return {
+              title: post.title,
+              content: post.content,
+              id: post._id,
+              imagePath: post.imagePath
+            }
+          }), maxPosts: postData.maxPosts
+        }
+      })
+    )
     .subscribe((transformedPostData)=>{
       this.posts = transformedPostData.posts;
       //using spread operator and array[] to return a the posts as a new array instead of a reference to this.posts
@@ -60,16 +62,6 @@ export class PostsService {
       ('http://localhost:3000/api/posts',
       postData)
       .subscribe((responseData)=>{
-        const post: Post = {
-          id: responseData.post.id, 
-          title:title, 
-          content:content,
-          imagePath: responseData.post.imagePath
-        }
-        this.posts.push(post);
-        //after the new post is pushed to the array of post, we emit next() which sends a message to 
-        // all the subscribers (observers), and send all the posts
-        this.postsUpdated.next([...this.posts]);
         this.router.navigate(["/"]);
       })
     }
@@ -93,28 +85,11 @@ export class PostsService {
       this.http
       .put('http://localhost:3000/api/posts/' + id, postData)
       .subscribe(response => {
-        console.log(response);  
-        const updatedPosts = [...this.posts];
-        const oldPostIndex = updatedPosts.findIndex(p => p.id=== id);
-        const post: Post ={
-          id:id, 
-          title:title, 
-          content:content, 
-          imagePath:''
-        }
-        updatedPosts[oldPostIndex] = post;
-        this.posts = updatedPosts;
-        this.postsUpdated.next([...this.posts]);
         this.router.navigate(["/"]);
       })
     }
     
     deletePost(postId: string){
-      this.http.delete('http://localhost:3000/api/posts/' + postId)
-      .subscribe(()=>{
-        const updatedPosts = this.posts.filter(post => post.id !== postId);
-        this.posts = updatedPosts;
-        this.postsUpdated.next([...this.posts])
-      })
+      return this.http.delete('http://localhost:3000/api/posts/' + postId)
     }
   }
