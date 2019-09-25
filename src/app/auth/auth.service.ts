@@ -42,9 +42,15 @@ export class AuthService {
    const token = response.token;
    this.token = token;
    if(token){
-    this.isAuthenticated = false;
+    this.isAuthenticated = true;
     this.authStatusListener.next(true);
    }
   })
+ }
+ 
+ logout(){
+  this.token = null;
+  this.isAuthenticated = false;
+  this.authStatusListener.next(false);
  }
 }
