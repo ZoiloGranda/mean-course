@@ -61,7 +61,6 @@ router.post(
   if (req.file) {
    const url = req.protocol + '://' + req.get('host');
    imagePath = url +'/images/' + req.file.filename;
-   
   }
   const post = new Post({
    _id:req.body.id,
@@ -69,9 +68,11 @@ router.post(
    content: req.body.content,
    imagePath: imagePath
   })
-  Post.updateOne({_id:req.params.id}, post).then(result=>{
-   console.log(result);
-   res.status(200).json({message:'updated successfully'})
+  Post.updateOne({_id:req.params.id, creator: req.userData.userId}, post).then(result=>{
+   if (result.nModified >0 ) {
+    res.status(200).json({message:'updated successfully'})
+   }
+   res.status(401).json({message:'Not Authorized'})
   }).catch(error=>{
    console.log('error updating the post');
    console.log(error);
@@ -116,9 +117,12 @@ router.post(
  
  router.delete('/:id',checkAuth, (req, res, next)=>{
   console.log(req.params);
-  Post.deleteOne({_id:req.params.id}).then(result=>{
+  Post.deleteOne({_id:req.params.id, creator: req.userData.userId}).then(result=>{
    console.log(result);
-   res.status(200).json({message:'post deleted'})
+   if (result.n >0 ) {
+    res.status(200).json({message:'deleted successfully'})
+   }
+   res.status(401).json({message:'Not Authorized'})
   }).catch(err=>{
    console.log('error deleting post from db');
    console.log(err);
