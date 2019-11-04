@@ -110,7 +110,7 @@ router.post(
    if (post) {
     res.status(200).json(post)
    }else {
-    res.status(404).json({message:'Post not found'})
+    res.status(404).json({message:'Post not found'}) 
    }
   })
  })
