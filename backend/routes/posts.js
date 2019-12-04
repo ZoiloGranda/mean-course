@@ -50,6 +50,11 @@ router.post(
     }
    })
   })
+  .catch(error=>{
+   res.status(500).json({
+    message: 'Creating a post failed'
+   })
+  })
  })
  
  router.put(
@@ -74,9 +79,10 @@ router.post(
     res.status(200).json({message:'updated successfully'})
    }
    res.status(401).json({message:'Not Authorized'})
-  }).catch(error=>{
-   console.log('error updating the post');
-   console.log(error);
+  }).catch(error => {
+   res.status(500).json({
+    message:'Could not update post'
+   })
   })
  })
  
@@ -101,8 +107,10 @@ router.post(
     maxPosts: count
    })
   })
-  .catch(err=>{
-   console.log(err);
+  .catch(error =>{
+   res.status(500).json({
+    message: 'Fetching Posts failed'
+   })
   })
  })
  
@@ -114,6 +122,11 @@ router.post(
     res.status(404).json({message:'Post not found'}) 
    }
   })
+  .catch(error =>{
+   res.status(500).json({
+    message: 'Fetching Post failed'
+   })
+  })
  })
  
  router.delete('/:id',checkAuth, (req, res, next)=>{
@@ -124,9 +137,11 @@ router.post(
     res.status(200).json({message:'deleted successfully'})
    }
    res.status(401).json({message:'Not Authorized'})
-  }).catch(err=>{
-   console.log('error deleting post from db');
-   console.log(err);
+  })
+  .catch(error =>{
+   res.status(500).json({
+    message: 'Fetching Post failed'
+   })
   })
  })
  
